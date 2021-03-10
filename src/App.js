@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import io from 'socket.io-client';
-const axios = require('axios')
 
 const DOWNSAMPLING_WORKER = './downsampling_worker.js';
 
