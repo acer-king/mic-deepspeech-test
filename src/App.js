@@ -73,14 +73,16 @@ class App extends Component {
 	}
 
 	createAudioProcessor(audioContext, audioSource) {
-		let processor = audioContext.createScriptProcessor(4096, 1, 1);
 
+		let processor = audioContext.createScriptProcessor(4096, 1, 1);
 		const sampleRate = audioSource.context.sampleRate;
+		console.log(sampleRate, "sampleRate")
 
 		let downsampler = new Worker(DOWNSAMPLING_WORKER);
 		downsampler.postMessage({ command: "init", inputSampleRate: sampleRate });
 		downsampler.onmessage = (e) => {
 			if (this.state.connected) {
+				console.log(e.data.buffer)
 				this.socket.emit('stream-data', e.data.buffer);
 			}
 		};
