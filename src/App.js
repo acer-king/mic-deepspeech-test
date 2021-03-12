@@ -21,7 +21,6 @@ class App extends Component {
 			reconnectionDelayMax: 10000
 		})
 
-
 		this.socket.on('connect', () => {
 			console.log('socket connected');
 			this.setState({ connected: true });
