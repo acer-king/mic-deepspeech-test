@@ -76,13 +76,11 @@ class App extends Component {
 
 		let processor = audioContext.createScriptProcessor(8192, 1, 1);
 		const sampleRate = audioSource.context.sampleRate;
-		console.log(sampleRate, "sampleRate")
 
 		let downsampler = new Worker(DOWNSAMPLING_WORKER);
 		downsampler.postMessage({ command: "init", inputSampleRate: sampleRate });
 		downsampler.onmessage = (e) => {
 			if (this.state.connected) {
-				console.log(e.data.buffer)
 				this.socket.emit('stream-data', e.data.buffer);
 			}
 		};
@@ -120,7 +118,7 @@ class App extends Component {
 	};
 
 	startMicrophone() {
-		this.audioContext = new AudioContext();
+		this.audioContext = new AudioContext({ sampleRate: 16000 });
 
 		const success = (stream) => {
 			console.log('started recording');
